@@ -188,9 +188,13 @@ class User:
             And army list of objects
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             
 =======
 >>>>>>> 2bf9749 (маленькие изменения)
+=======
+            
+>>>>>>> 1f7526e (c1)
         """
         self.id = id
         self.name = name
@@ -264,6 +268,3 @@ button = tk.Button(frame, text="Btn1", command=close)
 button.pack(side="right")
 
 root.mainloop()
-
-
-#БАЗЫ ДАННЫХ НАДО ДЕЛАТЬ
