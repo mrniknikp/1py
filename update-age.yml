@@ -19,7 +19,7 @@ jobs:
       - name: Calculate age and update README
         run: |
           npm install -g age-calculator
-          AGE=$(node -e "console.log(require('age-calculator').AgeFromDateString('1999-05-15').getYears())")
+          AGE=$(node -e "console.log(require('age-calculator').AgeFromDateString('2005-10-03').getYears())")
           sed -i "s/Никита, \*script\* лет/Никита, $AGE лет/g" README.md
           
       - name: Commit and push changes
