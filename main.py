@@ -87,13 +87,13 @@ class Player:
             return f"\n{self}\n\n{other}"
 
     def add_to_history(self, i, result):
-        my_file = open(f'history_{self.id}.txt', 'a+')
+        my_file = open(f'log/history_{self.id}.txt', 'a+')
         my_file.write(f"Result after {i} battles: {result}\n")
         my_file.close()
         return 0
     
     def clear_history(self):
-        my_file = open(f'history_{self.id}.txt', 'w+')
+        my_file = open(f'log/history_{self.id}.txt', 'w+')
         my_file.write(f"Here will be history of player #{self.id}:\n\n")
         my_file.close()
         return 0
@@ -187,14 +187,6 @@ class User:
             Name from username field
             And army list of objects
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            
-=======
->>>>>>> 2bf9749 (маленькие изменения)
-=======
-            
->>>>>>> 1f7526e (c1)
         """
         self.id = id
         self.name = name
