@@ -2,8 +2,8 @@ name: Update Age in README
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Запускать каждый день в полночь
-  workflow_dispatch:      # Позволяет запускать вручную
+    - cron: '0 0 * * *' 
+  workflow_dispatch: 
   push:
     branches: [ main ]
 
@@ -24,7 +24,7 @@ jobs:
         run: |
           # Вычисляем возраст с помощью чистого JavaScript
           AGE=$(node -e "
-            const birthDate = new Date('2000-05-15'); // ЗАМЕНИТЕ НА ВАШУ ДАТУ РОЖДЕНИЯ
+            const birthDate = new Date('2005-10-03');
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
             const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -41,8 +41,8 @@ jobs:
           
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "mr.niknikp@gmail.com"
+          git config --local user.name "Nikita Popandopulo"
           git add README.md
           git diff --staged --quiet || git commit -m "Автообновление возраста"
           git push
