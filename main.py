@@ -73,7 +73,7 @@ class Player:
         
         if not self.is_alive() and not other.is_alive():
             if self.hp == other.hp:
-                return "Bose dead"
+                return "Both dead"
             elif self.hp > other.hp:
                 self.hp = 1
             else:
