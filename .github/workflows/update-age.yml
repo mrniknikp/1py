@@ -2,8 +2,8 @@ name: Update Age in README
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # Запускать каждый день в полночь
+  workflow_dispatch:      # Позволяет запускать вручную
   push:
     branches: [ main ]
 
@@ -20,17 +20,22 @@ jobs:
         with:
           node-version: '18'
           
-      - name: Install age-calculator globally
-        run: npm install -g age-calculator
-          
       - name: Calculate age and update README
         run: |
-          # Замените '2000-05-15' на вашу реальную дату рождения
+          # Вычисляем возраст с помощью чистого JavaScript
           AGE=$(node -e "
-            const { AgeFromDateString } = require('age-calculator');
-            const age = new AgeFromDateString('2005-10-03').age;
+            const birthDate = new Date('2000-05-15'); // ЗАМЕНИТЕ НА ВАШУ ДАТУ РОЖДЕНИЯ
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+              age--;
+            }
+            
             console.log(age);
           ")
+          
           # Обновляем возраст в README.md
           sed -i "s/Никита, \\*script\\* лет/Никита, $AGE лет/g" README.md
           
