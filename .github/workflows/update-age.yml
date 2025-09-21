@@ -3,13 +3,15 @@ name: Update Age in README
 on:
   schedule:
     - cron: '0 0 * * *' 
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     branches: [ main ]
 
 jobs:
   update-age:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -22,22 +24,36 @@ jobs:
           
       - name: Calculate age and update README
         run: |
-          # Вычисляем возраст с помощью чистого JavaScript
-          AGE=$(node -e "
-            const birthDate = new Date('2005-10-03');
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-              age--;
+          AGE_STRING=$(node -e '
+            function getAge(birthDate, nowDate) {
+              let years = nowDate.getFullYear() - birthDate.getFullYear();
+              let months = nowDate.getMonth() - birthDate.getMonth();
+              let days = nowDate.getDate() - birthDate.getDate();
+              
+              if (days < 0) {
+                months--;
+                // Получаем количество дней в предыдущем месяце
+                const lastDayOfMonth = new Date(nowDate.getFullYear(), nowDate.getMonth(), 0).getDate();
+                days += lastDayOfMonth;
+              }
+              
+              if (months < 0) {
+                years--;
+                months += 12;
+              }
+              
+              return { years, months, days };
             }
             
-            console.log(age + " " + (12 - monthDiff) + " месяцев");
-          ")
+            const birthDate = new Date("2005-10-03");
+            const today = new Date();
+            const age = getAge(birthDate, today);
+            
+            console.log(age.years + " лет " + age.months + " месяцев " + age.days + " дней");
+          ')
           
           # Обновляем возраст в README.md
-          sed -i "s/Никита, \\*script\\* лет/Никита, $AGE лет/g" README.md
+          sed -i "s|Никита, \\*script\\*|Никита, $AGE_STRING|g" README.md
           
       - name: Commit and push changes
         run: |
