@@ -239,7 +239,7 @@ User1.all_players()
 
 
 #==========================TKINTER FUNCTIONS========================#
-
+"""
 
 def close():
     if messagebox.askokcancel("Выход", "Вы уверены, что хотите выйти?"):
@@ -260,3 +260,4 @@ button = tk.Button(frame, text="Btn1", command=close)
 button.pack(side="right")
 
 root.mainloop()
+"""
