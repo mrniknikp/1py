@@ -3,7 +3,6 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
-import random
 
 """
 class PlayerDatabase:
