@@ -187,7 +187,10 @@ class User:
             Name from username field
             And army list of objects
 
+<<<<<<< HEAD
             
+=======
+>>>>>>> 2bf9749 (маленькие изменения)
         """
         self.id = id
         self.name = name

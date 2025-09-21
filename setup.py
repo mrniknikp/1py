@@ -1,5 +1,4 @@
-import user_model
-import game_model
+from main import Player, User
 
 if __name__ == "main":
-    print(0)
+    print(f"nothing")
