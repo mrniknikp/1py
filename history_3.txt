@@ -1,0 +1,20 @@
+Here will be history of player #3:
+
+Result after 1 battles: 
+
+Name: name1 HP: 19.7 Armor: 1.30 Attack: 23.00
+
+
+
+Name: name3 HP: 70.1 Armor: 0.70 Attack: 25.00
+
+Result after 2 battles: 
+
+Name: name1 HP: 2.2 Armor: 1.30 Attack: 23.00
+
+
+
+Name: name3 HP: 40.2 Armor: 0.70 Attack: 25.00
+
+Result after 3 battles: Player 3 wins with 10.3 HP!
+Damage dealed: 29.9
