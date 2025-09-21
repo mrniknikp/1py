@@ -139,11 +139,29 @@ player1 = Player(1, "name1", HP+10, 1.3, ATTACK+10)
 player2 = Player(2, "name2", HP, ARMOR+0.4, ATTACK)
 player3 = Player(3, "name3", HP, 0.7, ATTACK + 12)
 player4 = Player(4, "name4", HP, 1.1, 20)
-player5 = Player(5)
+player5 = Player(5, "name5", 102, 1, 13)
+player6 = Player(6, "name6", 100, 1, 13)
 
 players = {player1, player2, player3, player4, player5}
 
 #==========================CLASS FIELD========================#
+
+class Location:
+    def __init__(self, name):
+        self.name = name
+    
+    def availavle_move(self):
+        if self.name == "castle":
+            return ["road"]
+        elif self.name == "forest":
+            return ["road"]
+        elif self.name == "pub":
+            return ["road"]
+        elif self.name == "road":
+            return ["castle", "forest", "pub"]
+        else:
+            print(f"Из {self.name} нет выхода")
+            return []
 
 
 class Field:
@@ -200,10 +218,11 @@ class User:
 
 #==========================MAIN BODY========================#
 
+battle_inf(player5, player6)
 
 User1 = User(1, "User One", [player1, player2])
 
-User2 = User(2, "User Two", [player4, player5])
+User2 = User(2, "User Two", [player5, player4])
 
 print(User1)
 
