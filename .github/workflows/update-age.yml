@@ -33,7 +33,7 @@ jobs:
               age--;
             }
             
-            console.log(age);
+            console.log(age + " " + (12 - monthDiff) + " месяцев");
           ")
           
           # Обновляем возраст в README.md
