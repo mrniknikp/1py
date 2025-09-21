@@ -264,3 +264,6 @@ button = tk.Button(frame, text="Btn1", command=close)
 button.pack(side="right")
 
 root.mainloop()
+
+
+#БАЗЫ ДАННЫХ НАДО ДЕЛАТЬ
