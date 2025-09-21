@@ -1,0 +1,40 @@
+name: Update Age in README
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Запускать каждый день в полночь
+  workflow_dispatch:      # Позволяет запускать вручную
+
+jobs:
+  update-age:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm install
+          
+      - name: Calculate age and update README
+        run: |
+          AGE=$(node -e "
+            const { AgeFromDateString } = require('age-calculator');
+            const age = new AgeFromDateString('2005-10-03').age;
+            console.log(age);
+          ")
+          sed -i "s/Никита, \\*script\\* лет/Никита, $AGE лет/g" README.md
+          
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git diff --staged --quiet || git commit -m "Автообновление возраста"
+          git push
