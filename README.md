@@ -4,7 +4,7 @@
 
 > По вопросам <a href="https://t.me/slyalike">пишите сюда</a>
 
-> <a href="@mrniknikp">GitHub профиль</a>
+> <a href="https://github.com/mrniknikp">GitHub профиль</a>
 
 ===
 
