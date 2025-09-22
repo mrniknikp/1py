@@ -202,13 +202,16 @@ class Location:
             print(f"{i}) {location}\n")
             i=+1
         choice = int(input())
-        try:
-            self.name = self.availavle_move()[choice-1]
-            print(f"Вы переместились и теперь находитесь тут: {self.name}")
-        except:
-            print(f"На поле {choice} ничего нет.")
-            self.move()
-        
+        if choice != 0:
+            try:
+                self.name = self.availavle_move()[choice-1]
+                print(f"Вы переместились и теперь находитесь тут: {self.name}")
+            except:
+                print(f"На поле {choice} ничего нет.")
+                self.move()
+        else:
+            print(f"Вы остались на поле {self.name}")
+            pass
 '''
 class Field:
     """TODO Сделать карту и пересещение по ней"""
