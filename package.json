@@ -1,6 +1,0 @@
-{
-  "name": "age-updater",
-  "dependencies": {
-    "age-calculator": "^1.0.0"
-  }
-}
