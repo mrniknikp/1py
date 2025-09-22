@@ -28,7 +28,6 @@ class PlayerDatabase:
 
 #==========================CLASS PLAYER========================#
 
-
 class Player:
     default_hp = 100
     default_armor = 1
@@ -144,11 +143,44 @@ player6 = Player(6, "name6", 100, 1, 13)
 
 players = {player1, player2, player3, player4, player5}
 
-#==========================CLASS FIELD========================#
+
+#==========================CLASS MENU========================#
+
+class Menu:
+    def __init__(self):
+        self.locations = Location()
+        self.player = Player()
+        self.npc = self.location.npc #TODO Надо сделать чтобы были все доступные на локации NPC
+
+
+#==========================CLASS NPC========================#
+
+class NPC:
+    def __init__(self, name, message = None, location = None):
+        self.name = name
+        self.message = message if message is not None else "Empty msg"
+        self.location = Location(location) if location is not None else "castle"
+
+    def pass_dialog(self):
+        print("Нажмите Enter")
+        a = input()
+        if a == '':
+            pass
+        else:
+            self.pass_dialog()
+
+    def talk(self, dialog):
+        for msg in dialog:
+            print(msg)
+            self.pass_dialog()
+        
+
+#==========================CLASS LOCATION========================#
 
 class Location:
     def __init__(self, name: str = None):
         self.name = name if name is not None else "castle"
+        self.npc = {}
     
     def availavle_move(self):
         if self.name == "castle":
@@ -164,6 +196,7 @@ class Location:
             return []
         
     def move(self):
+        print("0) Выйти из режима перемещения")
         i = 1
         for location in self.availavle_move():
             print(f"{i}) {location}\n")
@@ -176,7 +209,7 @@ class Location:
             print(f"На поле {choice} ничего нет.")
             self.move()
         
-
+'''
 class Field:
     """TODO Сделать карту и пересещение по ней"""
     locations = {"castle", "forest", "wheat_field", "road"}
@@ -187,7 +220,7 @@ class Field:
     def move(self):
         """TODO Проверка на возможность перемещения и реализация этого перемещения выбором пункта номером из контекстного меню"""
         return 0
-    
+'''
 
 #==========================CLASS USER========================#
 
@@ -254,6 +287,10 @@ print(User2.player_info(4))
 User1.all_players()
 
 User2.location.move()
+
+traider = NPC("traider")
+
+traider.talk(['msg1', 'msg2', 'msg3'])
 
 
 
