@@ -147,8 +147,8 @@ players = {player1, player2, player3, player4, player5}
 #==========================CLASS FIELD========================#
 
 class Location:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, name: str = None):
+        self.name = name if name is not None else "castle"
     
     def availavle_move(self):
         if self.name == "castle":
@@ -162,7 +162,20 @@ class Location:
         else:
             print(f"Из {self.name} нет выхода")
             return []
-
+        
+    def move(self):
+        i = 1
+        for location in self.availavle_move():
+            print(f"{i}) {location}\n")
+            i=+1
+        choice = int(input())
+        try:
+            self.name = self.availavle_move()[choice-1]
+            print(f"Вы переместились и теперь находитесь тут: {self.name}")
+        except:
+            print(f"На поле {choice} ничего нет.")
+            self.move()
+        
 
 class Field:
     """TODO Сделать карту и пересещение по ней"""
@@ -181,7 +194,7 @@ class Field:
 
 class User:
 
-    def __init__(self, id, name, players: list[Player] = None):
+    def __init__(self, id, name, location: Location = "castle", players: list[Player] = None):
         """
             Creating User with ID autoincrement (check parser.py)
             Name from username field
@@ -190,6 +203,7 @@ class User:
         """
         self.id = id
         self.name = name
+        self.location = location
         self.player = {}
         i = 0
         for player in players:
@@ -219,9 +233,11 @@ class User:
 
 battle_inf(player5, player6)
 
-User1 = User(1, "User One", [player1, player2])
+castle = Location()
 
-User2 = User(2, "User Two", [player5, player4])
+User1 = User(1, "User One", castle, [player1, player2])
+
+User2 = User(2, "User Two", castle, [player5, player4])
 
 print(User1)
 
@@ -236,6 +252,9 @@ print(User2.player_info(0))
 print(User2.player_info(4))
 
 User1.all_players()
+
+User2.location.move()
+
 
 
 #==========================TKINTER FUNCTIONS========================#
