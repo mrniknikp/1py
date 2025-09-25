@@ -5,6 +5,7 @@ from tkinter import messagebox
 import sqlite3
 import random
 
+
 """
 class PlayerDatabase:
     def __init__(self, db_name = "players.db"):
@@ -150,7 +151,7 @@ class Menu:
     def __init__(self):
         self.locations = Location()
         self.player = Player()
-        self.npc = self.location.npc #TODO Надо сделать чтобы были все доступные на локации NPC
+        self.npc = self.locations.npcs() #TODO Надо сделать чтобы были все доступные на локации NPC
 
 
 #==========================CLASS NPC========================#
@@ -176,6 +177,10 @@ class NPC:
         
 
 #==========================CLASS LOCATION========================#
+
+traider = NPC("traider", {"Hello, stranger! Where are you came from?", "Bye-bye"}, "road")
+king = NPC("king", {"Ha-ha, I'm king!", "Bye-bye"}, "castle")
+
 
 class Location:
     def __init__(self, name: str = None):
@@ -212,6 +217,35 @@ class Location:
         else:
             print(f"Вы остались на поле {self.name}")
             pass
+
+    def npcs(self):
+        ls = [traider, king]
+        castle_npc = []
+        forest_npc = []
+        pub_npc = []
+        road_npc = []
+        for i in enumerate(ls):
+            n_npc = ls[i]
+            if n_npc == "castle":
+                castle_npc =+ n_npc
+            elif n_npc == "forest":
+                forest_npc =+ n_npc
+            elif n_npc == "pub":
+                pub_npc =+ n_npc
+            elif n_npc == "road":
+                road_npc =+ n_npc
+
+        if self.name == "castle":
+            return castle_npc
+        elif self.name == "forest":
+            return forest_npc
+        elif self.name == "pub":
+            return pub_npc
+        elif self.name == "road":
+            return road_npc
+        else:
+            return []
+        
 '''
 class Field:
     """TODO Сделать карту и пересещение по ней"""
@@ -291,9 +325,7 @@ User1.all_players()
 
 User2.location.move()
 
-traider = NPC("traider")
-
-traider.talk(['msg1', 'msg2', 'msg3'])
+User1.location.npc
 
 
 
