@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 import sqlite3
 import random
-
+"""
 
 class PlayerDatabase:
     def __init__(self, db_name="players.db"):
@@ -15,7 +15,7 @@ class PlayerDatabase:
 
     def init_db(self):
         try:
-            self.connection = sqlite3.connect('players.db')
+            self.connection = sqlite3.connect(f"database/{self.db_name}")
             self.cursor = self.connection.cursor()
 
             self.cursor.execute('''
@@ -24,15 +24,46 @@ class PlayerDatabase:
                         name TEXT NOT NULL,
                         hp REAL NOT NULL,
                         armor REAL NOT NULL,
-                        attack REAL NOT NULL
+                        attack REAL NOT NULL,
+                        user_id INTEGER NOT NULL,
+                        location TEXT NOT NULL
                     )
                 ''')
+            
+            self.cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS User (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        player_id INTEGER NOT NULL
+                    )
+                ''')
+            
+            self.cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS dialog (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        npc_id INTEGER NOT NULL,
+                        msg TEXT
+                    )
+                ''')
+
+            #TODO Link to the dialog table (to simplify our work)
+            self.cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS npc (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        
+                        location TEXT NOT NULL
+                    )
+                ''')
+
             self.connection.commit()
         except sqlite3.Error as error:
             print(error)
 
     def close_db(self):
         self.connection.close()
+
+"""
 
 #==========================CLASS PLAYER========================#
 
@@ -336,6 +367,8 @@ User2.location.move()
 castle.npcs()
 
 traider.talk()
+
+db = PlayerDatabase()
 
 
 #==========================TKINTER FUNCTIONS========================#
