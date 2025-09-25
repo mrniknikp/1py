@@ -15,11 +15,7 @@ class PlayerDatabase:
 
     def init_db(self):
         try:
-<<<<<<< HEAD
             self.connection = sqlite3.connect(f"database/{self.db_name}")
-=======
-            self.connection = sqlite3.connect('players.db')
->>>>>>> 60ab6fc5386870d91f665c38f325058e04a99e93
             self.cursor = self.connection.cursor()
 
             self.cursor.execute('''
@@ -28,7 +24,6 @@ class PlayerDatabase:
                         name TEXT NOT NULL,
                         hp REAL NOT NULL,
                         armor REAL NOT NULL,
-<<<<<<< HEAD
                         attack REAL NOT NULL,
                         user_id INTEGER NOT NULL,
                         location TEXT NOT NULL
@@ -61,26 +56,16 @@ class PlayerDatabase:
                     )
                 ''')
 
-=======
                         attack REAL NOT NULL
                     )
                 ''')
->>>>>>> 60ab6fc5386870d91f665c38f325058e04a99e93
             self.connection.commit()
         except sqlite3.Error as error:
             print(error)
 
-<<<<<<< HEAD
     def close_db(self):
         self.connection.close()
 
-=======
-        def close_db(self):
-            self.connection.close()
-         self.cursor.close()
-
-    def init
->>>>>>> 60ab6fc5386870d91f665c38f325058e04a99e93
 """
 
 #==========================CLASS PLAYER========================#
