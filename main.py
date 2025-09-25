@@ -121,12 +121,6 @@ def battle_inf(*objects):
 
     return 0
 
-def new_player(players):
-    id = len(players)
-    name = Player(id)
-    return name
-
-
 #==========================GLOBAL CONST AND CREATION OBJECTS========================#
 
 
@@ -173,17 +167,13 @@ class NPC:
         else:
             self.pass_dialog()
 
-    def talk(self, dialog):
-        for msg in dialog:
+    def talk(self):
+        for msg in self.message:
             print(msg)
             self.pass_dialog()
         
 
 #==========================CLASS LOCATION========================#
-
-traider = NPC("traider", {"Hello, stranger! Where are you came from?", "Bye-bye"}, "road")
-king = NPC("king", {"Ha-ha, I'm king!", "Bye-bye"}, "castle")
-
 
 class Location:
     def __init__(self, name: str = None):
@@ -315,6 +305,9 @@ User1 = User(1, "User One", castle, [player1, player2])
 
 User2 = User(2, "User Two", castle, [player5, player4])
 
+traider = NPC("traider", ["Hello, stranger! Where are you came from?", "Bye-bye"], "road")
+king = NPC("king", ["Ha-ha, I'm king!", "Bye-bye"], "castle")
+
 print(User1)
 
 User1.add_player(player3)
@@ -332,6 +325,8 @@ User1.all_players()
 User2.location.move()
 
 castle.npcs()
+
+traider.talk()
 
 
 #==========================TKINTER FUNCTIONS========================#
