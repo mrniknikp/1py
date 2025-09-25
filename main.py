@@ -160,8 +160,11 @@ class NPC:
     def __init__(self, name, message = None, location = None):
         self.name = name
         self.message = message if message is not None else "Empty msg"
-        self.location = Location(location) if location is not None else "castle"
+        self.location = location if location is not None else "castle"
 
+    def __str__(self):
+        return self.name if self.name is not None else "No name"
+    
     def pass_dialog(self):
         print("Нажмите Enter")
         a = input()
@@ -206,9 +209,10 @@ class Location:
         for location in self.availavle_move():
             print(f"{i}) {location}\n")
             i=+1
-        choice = int(input())
+        choice = input()
         if choice != 0:
             try:
+                choice = int(choice)
                 self.name = self.availavle_move()[choice-1]
                 print(f"Вы переместились и теперь находитесь тут: {self.name}")
             except:
@@ -224,8 +228,10 @@ class Location:
         forest_npc = []
         pub_npc = []
         road_npc = []
-        for i in enumerate(ls):
-            n_npc = ls[i]
+        i = 0
+        for s in ls:
+            n_npc = s
+            i += 1
             if n_npc == "castle":
                 castle_npc =+ n_npc
             elif n_npc == "forest":
@@ -236,15 +242,15 @@ class Location:
                 road_npc =+ n_npc
 
         if self.name == "castle":
-            return castle_npc
+            print(castle_npc)
         elif self.name == "forest":
-            return forest_npc
+            print(forest_npc)
         elif self.name == "pub":
-            return pub_npc
+            print(pub_npc)
         elif self.name == "road":
-            return road_npc
+            print(road_npc)
         else:
-            return []
+            print(f"На локации {self.name} нет NPS")
         
 '''
 class Field:
@@ -325,8 +331,7 @@ User1.all_players()
 
 User2.location.move()
 
-User1.location.npc
-
+castle.npcs()
 
 
 #==========================TKINTER FUNCTIONS========================#
