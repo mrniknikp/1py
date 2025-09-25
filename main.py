@@ -397,6 +397,3 @@ button.pack(side="right")
 
 root.mainloop()
 """
-
-
-#PATCHHHHHHHHHHHHHHHHHHHHHHHHh
