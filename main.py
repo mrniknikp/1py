@@ -6,26 +6,33 @@ import sqlite3
 import random
 
 
-"""
 class PlayerDatabase:
-    def __init__(self, db_name = "players.db"):
+    def __init__(self, db_name="players.db"):
         self.db_name = db_name
+        self.connection = None
+        self.cursor = None
         self.init_db()
-    
+
     def init_db(self):
-        with sqlite3.connect(self.db_name) as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS players (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    hp REAL NOT NULL,
-                    armor REAL NOT NULL,
-                    attack REAL NOT NULL
-                )
-            ''')
-            cursor.commit()
-"""
+        try:
+            self.connection = sqlite3.connect('players.db')
+            self.cursor = self.connection.cursor()
+
+            self.cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS players (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        hp REAL NOT NULL,
+                        armor REAL NOT NULL,
+                        attack REAL NOT NULL
+                    )
+                ''')
+            self.connection.commit()
+        except sqlite3.Error as error:
+            print(error)
+
+    def close_db(self):
+        self.connection.close()
 
 #==========================CLASS PLAYER========================#
 
@@ -151,8 +158,8 @@ class Menu:
 #==========================CLASS NPC========================#
 
 class NPC:
-    def __init__(self, name, message = None, location = None):
-        self.name = name
+    def __init__(self, name = None, message = None, location = None):
+        self.name = name if name is not None else ""
         self.message = message if message is not None else "Empty msg"
         self.location = location if location is not None else "castle"
 
@@ -214,31 +221,33 @@ class Location:
 
     def npcs(self):
         ls = [traider, king]
-        castle_npc = []
-        forest_npc = []
-        pub_npc = []
-        road_npc = []
+        castle_npc = {}
+        forest_npc = {}
+        pub_npc = {}
+        road_npc = {}
         i = 0
-        for s in ls:
-            n_npc = s
+        for n_npc in ls:
             i += 1
-            if n_npc == "castle":
-                castle_npc =+ n_npc
-            elif n_npc == "forest":
-                forest_npc =+ n_npc
-            elif n_npc == "pub":
-                pub_npc =+ n_npc
-            elif n_npc == "road":
-                road_npc =+ n_npc
+            if n_npc.location == "castle":
+                castle_npc[len(castle_npc)] = n_npc
+            elif n_npc.location == "forest":
+                forest_npc[len(forest_npc)] = n_npc
+            elif n_npc.location == "pub":
+                pub_npc[len(pub_npc)] = n_npc
+            elif n_npc.location == "road":
+                road_npc[len(road_npc)] = n_npc
 
         if self.name == "castle":
-            print(castle_npc)
+            for i in enumerate(castle_npc):
+                print(i)
         elif self.name == "forest":
             print(forest_npc)
         elif self.name == "pub":
             print(pub_npc)
         elif self.name == "road":
-            print(road_npc)
+            for i in road_npc:
+                print("Доступные NPC:")
+                print(f"{i+1}) {road_npc[i]}")
         else:
             print(f"На локации {self.name} нет NPS")
         
