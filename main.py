@@ -4,6 +4,9 @@ import tkinter as tk
 from tkinter import messagebox
 import sqlite3
 import random
+import asyncio
+
+
 """
 
 class PlayerDatabase:
@@ -183,10 +186,9 @@ players = {player1, player2, player3, player4, player5}
 #==========================CLASS MENU========================#
 
 class Menu:
-    def __init__(self):
-        self.locations = Location()
-        self.player = Player()
-        self.npc = self.locations.npcs() #TODO Надо сделать чтобы были все доступные на локации NPC
+    def __init__(self, user):
+        self.locations = user.location()
+        self.player = user.player()
 
 
 #==========================CLASS NPC========================#
@@ -238,10 +240,10 @@ class Location:
         print("0) Выйти из режима перемещения")
         i = 1
         for location in self.availavle_move():
-            print(f"{i}) {location}\n")
-            i=+1
+            print(f"{i}) {location}")
+            i += 1
         choice = input()
-        if choice != 0:
+        if choice != "0":
             try:
                 choice = int(choice)
                 self.name = self.availavle_move()[choice-1]
@@ -251,10 +253,10 @@ class Location:
                 self.move()
         else:
             print(f"Вы остались на поле {self.name}")
-            pass
+        return self.name
 
     def npcs(self):
-        ls = [traider, king]
+        ls = [villager, traider, king]
         castle_npc = {}
         forest_npc = {}
         pub_npc = {}
@@ -271,19 +273,25 @@ class Location:
             elif n_npc.location == "road":
                 road_npc[len(road_npc)] = n_npc
 
+        print("Доступные NPC:")
         if self.name == "castle":
-            for i in enumerate(castle_npc):
-                print(i)
+            for i in castle_npc:
+                print(f"{i+1}) {castle_npc[i]}")
+            return castle_npc
         elif self.name == "forest":
-            print(forest_npc)
+            for i in forest_npc:
+                print(f"{i+1}) {forest_npc[i]}")
+            return forest_npc
         elif self.name == "pub":
-            print(pub_npc)
+            for i in pub_npc:
+                print(f"{i+1}) {pub_npc[i]}")
+            return pub_npc
         elif self.name == "road":
             for i in road_npc:
-                print("Доступные NPC:")
                 print(f"{i+1}) {road_npc[i]}")
+            return road_npc
         else:
-            print(f"На локации {self.name} нет NPS")
+            print(f"На локации {self.name} нет NPC")
         
 '''
 class Field:
@@ -314,10 +322,9 @@ class User:
         self.name = name
         self.location = location
         self.player = {}
-        i = 0
-        for player in players:
+        self.ls = {}
+        for i, player in enumerate(players):
             self.player[i] = player
-            i=+1
 
     def __str__(self):
         info_text = ''
@@ -338,9 +345,35 @@ class User:
         for p in self.player:
             print(self.player[p])
 
-#==========================MAIN BODY========================#
+    def quest(self, q):
+        try:
+            self.ls =+ q
+            return 1
+        except Exception as e:
+            return e
 
-battle_inf(player5, player6)
+    def init_menu(self):
+        while True:
+            print("""0) Exit
+1) Move
+2) Talk to NPC
+""")
+            try:
+                menu_choice = int(input())
+                if menu_choice == 0:
+                    break
+                elif menu_choice == 1:
+                    self.location.move()
+                elif menu_choice == 2:
+                    self.location.npcs()
+                    ch = int(input())
+                    self.location.npcs()[ch-1].talk()
+                else:
+                    print("Invalid choice. Try again.")
+            except:
+                print("Invalid choice. Try again.")
+
+#==========================MAIN BODY========================#
 
 castle = Location()
 
@@ -348,33 +381,25 @@ User1 = User(1, "User One", castle, [player1, player2])
 
 User2 = User(2, "User Two", castle, [player5, player4])
 
+
+villager = NPC("villager", ["Give me your money", "STFU"], "road")
 traider = NPC("traider", ["Hello, stranger! Where are you came from?", "Bye-bye"], "road")
-king = NPC("king", ["Ha-ha, I'm king!", "Bye-bye"], "castle")
+king = NPC("king", ["Ha-ha, I'm king!", "HE HE HE HA","Bye-bye"], "castle")
 
-print(User1)
+User2.init_menu()
+osname = os.name
 
-User1.add_player(player3)
-
-print(User1)
-
-print(User2)
-
-print(User2.player_info(0))
-
-print(User2.player_info(4))
-
-User1.all_players()
-
-User2.location.move()
-
-castle.npcs()
-
-traider.talk()
-
+if osname == "posix":
+    print("Linux")
+elif osname == "nt":
+    print("Windows")
+else:
+    print(f"Unknown OS {osname}")
 #db = PlayerDatabase()
 
 
 #==========================TKINTER FUNCTIONS========================#
+
 """
 
 def close():
